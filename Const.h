@@ -10,7 +10,7 @@ const int K = 4; // число потоков
 
 const int len = N / K;
 
-const double a = 0;
+const double a = 0; // левая граница интегрирования
 
-const double b = 5;
+const double b = 5; // правая граница интегрирования
 #endif //MULTITHREADINGMONTECARLO_CONST_H

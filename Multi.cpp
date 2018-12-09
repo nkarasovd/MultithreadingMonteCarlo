@@ -4,13 +4,12 @@
 #include "Multi.h"
 
 
-void all(std::vector<double> &sample, std::vector<double> &mean, int thread_id) {
-    pcg64 rng(1);
-    std::uniform_real_distribution<double> dist(a, b);
-    rng.discard(static_cast<pcg_extras::pcg128_t>(len * thread_id));
+void all(std::vector<double> &sample, std::vector<double> &mean, int thread_id, pcg64 &rng, std::vector<pcg64> &generators) {
 
-    for (int i = len * thread_id; i < len * (thread_id + 1); i++) {
-        mean[thread_id] += std::exp(dist(rng));
+    std::uniform_real_distribution<double> dist(a, b);
+
+    for (int i = 0; i < len; i++) {
+        mean[thread_id] += std::exp(dist(generators[K]));
     }
 
     mean[thread_id] *= (b - a) / N;

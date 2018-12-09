@@ -10,6 +10,6 @@
 #include <random>
 #include "pcg_random.hpp"
 
-void all(std::vector<double> &sample, std::vector<double> &mean, int thread_id);
+void all(std::vector<double> &sample, std::vector<double> &mean, int thread_id, pcg64 &rng, std::vector<pcg64> &generators);
 
 #endif //MULTITHREADINGMONTECARLO_TASKS_H
