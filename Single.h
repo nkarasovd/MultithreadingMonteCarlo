@@ -15,4 +15,6 @@ void single_calculate(std::vector<double> &sample);
 
 double single_mean(std::vector<double> &sample);
 
+double single_all(std::vector<double> &sample, pcg64 &rng);
+
 #endif //MULTITHREADINGMONTECARLO_SINGLE_H
