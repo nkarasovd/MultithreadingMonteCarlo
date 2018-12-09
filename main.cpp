@@ -8,9 +8,6 @@ int main() {
     std::vector<double> m_res(N);
     std::vector<std::thread> t1, t2, t3;
 
-    /**
-     * Генерация
-     */
     clock_t start;
 
 
