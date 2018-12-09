@@ -10,7 +10,7 @@ int main() {
     std::vector<double> m_res(N);
     std::vector<double> s_res(N);
 
-    std::vector<std::thread> t1, t2, t3;
+    std::vector<std::thread> t;
 
 
     double m_mean = 0;
@@ -25,16 +25,18 @@ int main() {
 
     clock_t start = clock();
     for (int i = 0; i < K; ++i) {
-        t3.emplace_back(std::thread(all, std::ref(m_res), std::ref(m_mean_sample), i, std::ref(rng), std::ref(generators)));
+        t.emplace_back(std::thread(all, std::ref(m_res), std::ref(m_mean_sample), i, std::ref(rng), std::ref(generators)));
     }
 
-    for (auto &t : t3) {
-        t.join();
+    for (auto &t_cur : t) {
+        t_cur.join();
     }
 
     for (int i = 0; i < K; i++) {
         m_mean += m_mean_sample[i];
     }
+
+    m_mean *= (b - a) / N;
 
     std::cout << "Calculation sample mean of sample of " << N << " random numbers in " << K << " threads took: "
               << float(clock() - start) << std::endl;
