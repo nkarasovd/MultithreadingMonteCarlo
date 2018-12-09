@@ -16,7 +16,7 @@ int main() {
     double m_mean = 0;
     std::vector<double> m_mean_sample(K);
 
-    std::vector<pcg64> generators(K);
+    std::vector<pcg64> generators;
 
     for (size_t i = 0; i < K; ++i) {
         generators.emplace_back(1);
@@ -25,7 +25,8 @@ int main() {
 
     clock_t start = clock();
     for (int i = 0; i < K; ++i) {
-        t.emplace_back(std::thread(all, std::ref(m_res), std::ref(m_mean_sample), i, std::ref(rng), std::ref(generators)));
+        t.emplace_back(std::thread(all, std::ref(m_res), std::ref(m_mean_sample),
+                                   i, std::ref(rng), std::ref(generators)));
     }
 
     for (auto &t_cur : t) {
@@ -49,6 +50,6 @@ int main() {
     std::cout << "Sample mean multi = " << std::scientific <<  m_mean << std::endl;
     std::cout << "Sample mean single = " << std::scientific << s_mean << std::endl;
 
-    std::cout << "Разность = " << std::scientific << m_mean - s_mean << std::endl;
+    std::cout << "Difference = " << std::scientific << m_mean - s_mean << std::endl;
     return 0;
 }
