@@ -5,22 +5,17 @@
 
 int main() {
     pcg64 rng(1);
+
     std::vector<double> m_res(N);
-    std::vector<std::thread> t1, t2, t3;
-
-    clock_t start;
-
-
     std::vector<double> s_res(N);
 
-    /**
-     * Подсчет интеграла
-     */
+    std::vector<std::thread> t1, t2, t3;
+
 
     double m_mean = 0;
     std::vector<double> m_mean_sample(K);
 
-    start = clock();
+    clock_t start = clock();
     for (int i = 0; i < K; ++i) {
         t3.emplace_back(std::thread(all, std::ref(m_res), std::ref(m_mean_sample), i));
     }
@@ -40,6 +35,7 @@ int main() {
     double s_mean = single_all(s_res, rng);
     std::cout << "Calculation sample mean of " << N << " random numbers in the single thread took: "
               << float(clock() - start) << std::endl << std::endl;
+    
     std::cout << "Sample mean multi = " << m_mean << std::endl;
     std::cout << "Sample mean single = " << s_mean << std::endl;
     return 0;
