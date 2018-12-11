@@ -9,6 +9,6 @@
 #include <vector>
 #include "pcg_random.hpp"
 
-double single_all(std::vector<double> &sample, pcg64 &rng);
+double single_all(pcg64 rng);
 
 #endif //MULTITHREADINGMONTECARLO_SINGLE_H

@@ -7,9 +7,6 @@
 int main() {
     pcg64 rng(1);
 
-    std::vector<double> m_res(N);
-    std::vector<double> s_res(N);
-
     std::vector<std::thread> t;
 
 
@@ -25,16 +22,11 @@ int main() {
 
     clock_t start = clock();
     for (int i = 0; i < K; ++i) {
-        t.emplace_back(std::thread(all, std::ref(m_res), std::ref(m_mean_sample),
-                                   i, std::ref(rng), std::ref(generators)));
+        t.emplace_back(std::thread(all, std::ref(m_mean), i, generators));
     }
 
     for (auto &t_cur : t) {
         t_cur.join();
-    }
-
-    for (int i = 0; i < K; i++) {
-        m_mean += m_mean_sample[i];
     }
 
     m_mean *= (b - a) / N;
@@ -43,7 +35,7 @@ int main() {
               << float(clock() - start) << std::endl;
 
     start = clock();
-    double s_mean = single_all(s_res, rng);
+    double s_mean = single_all(rng);
     std::cout << "Calculation sample mean of " << N << " random numbers in the single thread took: "
               << float(clock() - start) << std::endl << std::endl;
     
