@@ -6,19 +6,16 @@
 
 int main() {
     pcg64 rng(1);
-
-    std::vector<std::thread> t;
-
-
     double m_mean = 0;
-    std::vector<double> m_mean_sample(K);
 
     std::vector<pcg64> generators;
 
     for (size_t i = 0; i < K; ++i) {
         generators.emplace_back(1);
-        generators[i].discard(static_cast<pcg_extras::pcg128_t>(2 * len * i));
+        generators[i].discard(static_cast<pcg_extras::pcg128_t>(len * i));
     }
+
+    std::vector<std::thread> t;
 
     clock_t start = clock();
     for (int i = 0; i < K; ++i) {
