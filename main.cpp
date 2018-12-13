@@ -5,18 +5,15 @@
 #include <iomanip>
 
 int main() {
-    pcg64 rng(1);
+
     pcg64 rng_m(1);
+    pcg64 rng(1);
     double m_mean = 0;
 
-    std::vector<pcg64> generators;
-    generators.reserve(K);
+    std::vector<pcg64> generators(K, pcg64(1));
 
     for (size_t i = 0; i < K; ++i) {
-//        generators.emplace_back(1);
-//        generators[i].discard(static_cast<pcg_extras::pcg128_t>(len * 2));
-        generators.push_back(rng_m);
-        rng_m.discard(len * i);
+        generators[i].discard(len * i);
     }
 
     std::vector<std::thread> t;
