@@ -4,7 +4,7 @@
 #include "Multi.h"
 
 
-void all(double &mean, int thread_id, std::vector<pcg64> generators) {
+void all(std::vector<double> &mean, int thread_id, std::vector<pcg64> generators) {
 
     std::uniform_real_distribution<double> dist(a, b);
     pcg64 rng = generators[thread_id];
@@ -15,5 +15,5 @@ void all(double &mean, int thread_id, std::vector<pcg64> generators) {
     }
 
 
-    mean += _mean;
+    mean[thread_id] = _mean;
 }
